@@ -37,6 +37,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -44,6 +45,7 @@ import java.util.Map;
 
 @SpringBootApplication
 @EnableWebSecurity
+@EnableJdbcHttpSession
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @ComponentScan(excludeFilters = {
         @ComponentScan.Filter(type = FilterType.REGEX, pattern = "org\\.osiam\\.cli.*")

@@ -38,6 +38,12 @@ spring.jpa.hibernate.ddl-auto: none
 server.port: ${osiam.port:8080}
 security.oauth2.resource.filterOrder: 3
 
+spring:
+  datasource:
+    url: ${osiam.db.url}
+    username: ${osiam.db.username}
+    password: ${osiam.db.password}
+
 management.context-path: /management
 
 flyway:
