@@ -77,8 +77,8 @@ public class MeController extends ResourceController<User> {
 
         Object principal = userAuthentication.getPrincipal();
         User user;
-        if (principal instanceof User) {
-            user = userProvisioning.getById(((User) principal).getId());
+        if (principal instanceof String) {
+            user = userProvisioning.getByUsername((String) principal);
         } else {
             throw new IllegalArgumentException("User not authenticated.");
         }

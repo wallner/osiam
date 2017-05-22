@@ -45,11 +45,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -117,13 +113,11 @@ public class InternalAuthenticationProvider implements AuthenticationProvider,
             }
         }
 
-        User authUser = new User.Builder(username).setId(user.getId()).build();
-
         List<GrantedAuthority> grantedAuthorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getValue()))
                 .collect(Collectors.toList());
 
-        return new InternalAuthentication(authUser, password, grantedAuthorities);
+        return new InternalAuthentication(username, password, grantedAuthorities);
     }
 
     @Override
@@ -186,10 +180,6 @@ public class InternalAuthenticationProvider implements AuthenticationProvider,
 
             if (internalAuth.getPrincipal() != null) {
 
-                if (internalAuth.getPrincipal() instanceof User) {
-                    User user = (User) internalAuth.getPrincipal();
-                    return user.getUserName();
-                }
                 if (internalAuth.getPrincipal() instanceof String) {
                     return (String) internalAuth.getPrincipal();
                 }

@@ -72,8 +72,8 @@ class MeControllerSpec extends Specification {
                 .header('Authorization', "Bearer ${accessToken}"))
         then:
         1 * resourceServerTokenServices.loadAuthentication(accessToken) >> authentication
-        1 * userAuthentication.getPrincipal() >> user // the user returned by getPrincipal is not fully populated
-        1 * userProvisioning.getById(user.id) >> user // But the mocking is irrelevant here.
+        1 * userAuthentication.getPrincipal() >> 'testUser'
+        1 * userProvisioning.getByUsername('testUser') >> user
         response.andExpect(status().isOk())
                 .andExpect(header().string('Location', endsWith("/Users/${id}")))
                 .andExpect(jsonPath('$.userName').value("testUser"))
@@ -87,8 +87,8 @@ class MeControllerSpec extends Specification {
                 .param('attributes', 'userName'))
         then:
         1 * resourceServerTokenServices.loadAuthentication(accessToken) >> authentication
-        1 * userAuthentication.getPrincipal() >> user
-        1 * userProvisioning.getById(user.id) >> user
+        1 * userAuthentication.getPrincipal() >> 'testUser'
+        1 * userProvisioning.getByUsername('testUser') >> user
         response.andExpect(status().isOk())
                 .andExpect(jsonPath('$.userName').value("testUser"))
                 .andExpect(jsonPath('$.displayName').doesNotExist())

@@ -77,7 +77,7 @@ class InternalAuthenticationProviderSpec extends Specification {
         Authentication successfulAuthentication = provider.authenticate(authentication)
 
         then:
-        ((User) successfulAuthentication.principal).userName == userName
+        successfulAuthentication.principal == userName
     }
 
     def 'successful authentication with sha hash is possible and replaces user'() {
@@ -96,7 +96,7 @@ class InternalAuthenticationProviderSpec extends Specification {
 
         then:
         1 * userProvisioning.replace(user.getId(), replaceUser);
-        ((User) successfulAuthentication.principal).userName == userName
+        successfulAuthentication.principal == userName
     }
 
     def 'authentication with wrong sha hash fails'() {

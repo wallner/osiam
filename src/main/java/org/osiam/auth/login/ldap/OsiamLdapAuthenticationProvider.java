@@ -109,15 +109,13 @@ public class OsiamLdapAuthenticationProvider extends LdapAuthenticationProvider 
             throw new DisabledException("The user with the username '" + username + "' is disabled!");
         }
 
-        User authUser = new User.Builder(username).setId(user.getId()).build();
-
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
         for (Role role : user.getRoles()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getValue()));
         }
 
-        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(authUser, null,
+        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(username, null,
                 grantedAuthorities);
 
         result.setDetails(authentication.getDetails());
